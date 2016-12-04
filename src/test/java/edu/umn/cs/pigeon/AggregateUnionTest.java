@@ -5,7 +5,6 @@
 
 package edu.umn.cs.pigeon;
 
-
 import static org.apache.pig.ExecType.LOCAL;
 
 import java.util.ArrayList;
@@ -19,7 +18,6 @@ import org.apache.pig.data.Tuple;
 
 import edu.umn.cs.pigeon.TestHelper;
 
-
 /**
  * @author Robert Kennington
  * 
@@ -27,7 +25,6 @@ import edu.umn.cs.pigeon.TestHelper;
  */
 public class AggregateUnionTest extends TestCase {
   
-
 	// This test only invokes the exec() method and not the accummulate() method.
   public void testShouldWorkWithWKT() throws Exception {
     // Create polygons
@@ -35,8 +32,10 @@ public class AggregateUnionTest extends TestCase {
     data.add(new String[] {"0", "POLYGON((0 0, 6 0, 0 6, 0 0))"});
     data.add(new String[] {"1", "POLYGON((3 2, 8 2, 3 7, 3 2))"});
     data.add(new String[] {"2", "POLYGON((2 -2, 9 -2, 9 5, 2 -2))"});
+    
     String datafile = TestHelper.createTempFile(data, "\t");
     datafile = datafile.replace("\\", "\\\\");
+    
     PigServer pig = new PigServer(LOCAL);
     String query = "A = LOAD 'file:" + datafile + "' as (id, geom);\n" +
       "B = GROUP A ALL;\n" +
@@ -59,6 +58,4 @@ public class AggregateUnionTest extends TestCase {
     assertEquals(1, output_size);
   }
   
-  
-
 }
